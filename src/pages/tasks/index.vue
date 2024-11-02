@@ -3,28 +3,28 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Tables } from '../../../database/types'
 import { ref } from 'vue'
 
-const projectsData = ref<Tables<'projects'>[] | null>( null );
+const tasksData = ref<Tables<'tasks'>[] | null>( null );
 
 ( async () => {
   const { data, error } = await supabase
-    .from( 'projects')
+    .from( 'tasks')
     .select();
 
   if (error) console.error(error);
-  projectsData.value = data;
+  tasksData.value = data;
 
-  console.log( projectsData.value[0]);
+  console.log( tasksData.value[0]);
 })();
 </script>
 
 <template>
   <div>
-    <h1>Projects Page</h1>
+    <h1>Tasks Page</h1>
     <RouterLink to="/">Back to Homepage</RouterLink>
 
-    <h2 v-for="project in projectsData" :key="project.id">
-      <RouterLink  :to="{ name: '/projects/[slug]', params: { slug: project.slug } }">
-        {{ project.name }}
+    <h2 v-for="task in tasksData" :key="task.id">
+      <RouterLink  :to="{ name: '/tasks/[project_id]', params: { project_id: task.project_id } }">
+        {{ task.name }}
       </RouterLink>
     </h2>
   </div>
