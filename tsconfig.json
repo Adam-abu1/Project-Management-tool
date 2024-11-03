@@ -15,6 +15,10 @@
   "compilerOptions": {
     // ...
     "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
     // ...
   }
 }
