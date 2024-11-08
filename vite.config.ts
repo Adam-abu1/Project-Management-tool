@@ -17,7 +17,13 @@ export default defineConfig({
       routesFolder: 'src/pages',
       path: ''
     }),
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: ( tag ) => tag.startsWith( 'iconify-icon' )
+        }
+      }
+    }),
   ],
   resolve: {
     alias: {
