@@ -23,6 +23,6 @@ declare module 'vue-router/auto-routes' {
     '/projects/': RouteRecordInfo<'/projects/', '/projects', Record<never, never>, Record<never, never>>,
     '/projects/[slug]': RouteRecordInfo<'/projects/[slug]', '/projects/:slug', { slug: ParamValue<true> }, { slug: ParamValue<false> }>,
     '/tasks/': RouteRecordInfo<'/tasks/', '/tasks', Record<never, never>, Record<never, never>>,
-    '/tasks/[project_id]': RouteRecordInfo<'/tasks/[project_id]', '/tasks/:project_id', { project_id: ParamValue<true> }, { project_id: ParamValue<false> }>,
+    '/tasks/[id]': RouteRecordInfo<'/tasks/[id]', '/tasks/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
   }
 }

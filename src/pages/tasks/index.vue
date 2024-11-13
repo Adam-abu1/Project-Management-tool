@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient';
 import type { Tables } from '../../../database/types';
-import { h, ref } from 'vue';
 import type { ColumnDef } from '@tanstack/vue-table';
 import DataTable from '@/components/ui/DataTable.vue';
+import { RouterLink } from 'vue-router';
 
 const tasks = ref<Tables<'tasks'>[] | null>(null);
 
@@ -16,7 +16,7 @@ const tasks = ref<Tables<'tasks'>[] | null>(null);
   if (error) console.error(error);
   tasks.value = data;
 
-  console.log( 'sdfsf',tasks.value[0]);
+  console.log( 'sdfsf',tasks.value);
 })();
 
 
@@ -24,7 +24,7 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-center' }, 'Name'),
-    cell: ({ row }) => h( 'div', {class: 'text-center font-medium' }, row.getValue( 'name') )
+    cell: ({ row }) => h( RouterLink, { to: `tasks/${ row.original.project_id }`, class: 'text-center font-medium hover:bg-muted block w-full' }, () => row.getValue( 'name') )
   },
   {
     accessorKey: 'status',
@@ -68,7 +68,7 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     <RouterLink to="/">Back to Homepage</RouterLink>
 
     <h2 v-for="task in tasks" :key="task.id">
-      <RouterLink  :to="{ name: '/tasks/[project_id]', params: { project_id: task.project_id } }">
+      <RouterLink  :to="{ name: '/tasks/[id]', params: { id: task.id } }">
         {{ task.name }}
       </RouterLink>
     </h2>
