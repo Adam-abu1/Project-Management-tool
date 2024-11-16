@@ -2,8 +2,9 @@
 import { supabase } from '@/lib/supabaseClient';
 import type { Tables } from '../../../database/types';
 import type { ColumnDef } from '@tanstack/vue-table';
-import DataTable from '@/components/ui/DataTable.vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';import { usePageStore } from '@/stores/page';
+
+usePageStore().pageData.title = ' My Projects';
 
 const projectsData = ref<Tables<'projects'>[] | null>( null );
 
@@ -14,8 +15,6 @@ const projectsData = ref<Tables<'projects'>[] | null>( null );
 
   if (error) console.error(error);
   projectsData.value = data;
-
-  console.log( projectsData.value[0]);
 })();
 
 const columns: ColumnDef<Tables<'projects'>>[] = [
@@ -47,14 +46,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
 
 <template>
   <div>
-    <h1>Projects Page</h1>
     <RouterLink to="/">Back to Homepage</RouterLink>
-
-    <h2 v-for="project in projectsData" :key="project.id">
-      <RouterLink  :to="{ name: '/projects/[slug]', params: { slug: project.slug } }">
-        {{ project.name }}
-      </RouterLink>
-    </h2>
 
     <DataTable v-if="projectsData" :columns="columns" :data="projectsData" />
   </div>

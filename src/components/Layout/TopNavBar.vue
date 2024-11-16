@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel, DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import Input from '../ui/input/Input.vue';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 </script>
 
 <template>

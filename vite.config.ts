@@ -6,6 +6,7 @@ import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router';
+import Components from 'unplugin-vue-components/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -20,7 +21,7 @@ export default defineConfig({
     VueRouter({
       routesFolder: 'src/pages',
       path: ''
-    }),,
+    }),
     AutoImport({
       // targets to transform
       include: [
@@ -32,16 +33,21 @@ export default defineConfig({
       imports: [
         // presets
         'vue',
-        VueRouterAutoImports
+        VueRouterAutoImports,
+        {
+          'pinia': [ 'defineStore', 'storeToRefs', 'acceptHMRUpdate' ]
+        }
       ],
       // Filepath to generate corresponding .d.ts file.
       // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
       // Set `false` to disable.
       dts: true,
+      dirs: [ 'src/stores',  ],
       // Include auto-imported packages in Vite's `optimizeDeps` options
       // Recommend to enable
       viteOptimizeDeps: true,
     }),
+    Components({}),
     vue({
       template: {
         compilerOptions: {

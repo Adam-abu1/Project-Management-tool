@@ -3,7 +3,9 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Tables } from '../../../database/types';
 import type { ColumnDef } from '@tanstack/vue-table';
 import DataTable from '@/components/ui/DataTable.vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';import { usePageStore } from '@/stores/page';
+
+usePageStore().pageData.title = 'My Tasks';
 
 const tasks = ref<Tables<'tasks'>[] | null>(null);
 
@@ -11,12 +13,19 @@ const tasks = ref<Tables<'tasks'>[] | null>(null);
 ( async () => {
   const { data, error } = await supabase
     .from( 'tasks')
-    .select();
+    .select(`
+    *,
+    projects(
+      id,
+      name,
+      slug
+    )`
+    );
 
   if (error) console.error(error);
   tasks.value = data;
 
-  console.log( 'sdfsf',tasks.value);
+  console.log( 'sdfsf',data);
 })();
 
 
@@ -41,11 +50,12 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     }
   },
   {
-    accessorKey: 'project_id',
+    accessorKey: 'projects',
     header: () => h('div', { class: 'text-left' }, 'Project'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
-    }
+    cell: ({ row }) => h( RouterLink, {
+      to: `projects/${ row.original.projects.slug }`,
+      class: 'text-left font-medium hover:bg-muted block w-full' },
+      () => row.getValue( 'projects').name )
   },
   {
     accessorKey: 'collaborators',
@@ -64,14 +74,7 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
 
 <template>
   <div>
-    <h1>Tasks Page</h1>
     <RouterLink to="/">Back to Homepage</RouterLink>
-
-    <h2 v-for="task in tasks" :key="task.id">
-      <RouterLink  :to="{ name: '/tasks/[id]', params: { id: task.id } }">
-        {{ task.name }}
-      </RouterLink>
-    </h2>
 
     <DataTable v-if="tasks" :columns="columns" :data="tasks" />
   </div>
