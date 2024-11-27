@@ -6,7 +6,7 @@ export const columns: ColumnDef<TaskWithProjects[0]>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-center' }, 'Name'),
-    cell: ({ row }) => h( RouterLink, { to: `tasks/${ row.original.project_id }`, class: 'text-center font-medium hover:bg-muted block w-full' }, () => row.getValue( 'name') )
+    cell: ({ row }) => h( RouterLink, { to: `tasks/${ row.original.id }`, class: 'text-center font-medium hover:bg-muted block w-full' }, () => row.getValue( 'name') )
   },
   {
     accessorKey: 'status',
