@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useErrorStore } from '@/stores/error';
+
+useErrorStore().setError( {
+  error: 'Page not foubnd'
+});
+</script>
 
 <template>
-  <h1>404 Not Found</h1>
+  <div></div>
 </template>
