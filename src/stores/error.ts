@@ -4,16 +4,19 @@ import type { ExtendedPostgresError } from '@/types/Error';
 export const useErrorStore = defineStore( 'error-store', () => {
   const activeError = ref<null | CustomError | ExtendedPostgresError >( null );
 
-  const setError = ( { error, customCode }: { error: string | ExtendedPostgresError, customCode: number } ) => {
+  const setError = ( { error, customCode }: {
+    error: string | ExtendedPostgresError | Error,
+    customCode?: number
+  } ) => {
 
-    if ( typeof error === 'string' ) {
-      activeError.value = new Error( error );
-      activeError.value.customCode = customCode;
+    if ( typeof error === 'string' || error instanceof Error) {
+      activeError.value = typeof error === 'string' ? new Error( error ) : error;
+      activeError.value.customCode = customCode || 500;
       return
     }
 
     activeError.value = error;
-    activeError.value.statusCode = customCode;
+    activeError.value.statusCode = customCode || 500;
   }
   return {
     activeError,

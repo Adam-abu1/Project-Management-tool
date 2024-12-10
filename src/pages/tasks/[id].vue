@@ -21,8 +21,6 @@ const getTask = async () => {
 };
 
 await getTask();
-
-
 </script>
 
 <template>
@@ -43,7 +41,7 @@ await getTask();
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>
-      <TableCell>{{ task.project.name }}</TableCell>
+      <TableCell>{{ task.projects.name }}</TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>

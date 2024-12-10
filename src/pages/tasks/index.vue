@@ -12,6 +12,7 @@ const tasks = ref<TaskWithProjects | null>(null);
   if (error) useErrorStore().setError({ error, customCode: status })
   tasks.value = data;
 })();
+
 </script>
 
 <template>
