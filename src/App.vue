@@ -1,13 +1,15 @@
 <script setup lang='ts'>
+const errorStore = useErrorStore();
 
-import AppErrorPage from '@/components/AppError/AppErrorPage.vue';
-const { activeError } = storeToRefs( useErrorStore() );
-
+onErrorCaptured(( error ) => {
+  errorStore.setError( { error } );
+  return false;
+});
 </script>
 
 <template>
   <AuthLayout>
-    <AppErrorPage v-if="activeError" />
+    <AppErrorPage v-if="errorStore.activeError" />
 
     <RouterView v-else v-slot='{ Component, route }'>
       <Suspense v-if='Component' :timeout='0'>
