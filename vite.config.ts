@@ -18,43 +18,35 @@ export default defineConfig({
     },
   },
   plugins: [
-    VueRouter({
-      routesFolder: 'src/pages',
-      path: ''
+    VueRouter(),
+    Components({
+      /* options */
     }),
     AutoImport({
-      // targets to transform
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
         /\.vue\?vue/, // .vue
-        /\.md$/, // .md
+        /\.md$/ // .md
       ],
       imports: [
-        // presets
         'vue',
         VueRouterAutoImports,
         {
-          'pinia': [ 'defineStore', 'storeToRefs', 'acceptHMRUpdate' ]
+          pinia: ['defineStore', 'storeToRefs', 'acceptHMRUpdate']
         }
       ],
-      // Filepath to generate corresponding .d.ts file.
-      // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
-      // Set `false` to disable.
       dts: true,
-      dirs: [ 'src/stores',  ],
-      // Include auto-imported packages in Vite's `optimizeDeps` options
-      // Recommend to enable
       viteOptimizeDeps: true,
+      dirs: ['src/stores']
     }),
-    Components({}),
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: ( tag ) => tag.startsWith( 'iconify-icon' )
+          isCustomElement: (element) => element.startsWith('iconify-icon')
         }
       }
-    }),
+    })
   ],
   resolve: {
     alias: {
