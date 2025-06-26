@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import { login } from '@/utils/supaAuth';
+
+const formData = ref({
+  email: '',
+  password: '',
+});
+const router = useRouter();
+
+const signin = async () => {
+  const isSignedIn = await login(formData.value);
+
+  if (isSignedIn) router.push('/');
+}
 </script>
 
 <template>
@@ -14,17 +27,17 @@
           <Separator label="Or" />
         </div>
 
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="signin">
           <div class="grid gap-2">
             <Label id="email" class="text-left">Email</Label>
-            <Input type="email" placeholder="johndoe19@example.com" required />
+            <Input type="email" placeholder="johndoe19@example.com" required v-model="formData.email" />
           </div>
           <div class="grid gap-2">
             <div class="flex items-center">
               <Label id="password">Password</Label>
               <a href="#" class="inline-block ml-auto text-xs underline"> Forgot your password? </a>
             </div>
-            <Input id="password" type="password" autocomplete required />
+            <Input id="password" type="password" autocomplete required v-model="formData.password" />
           </div>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
