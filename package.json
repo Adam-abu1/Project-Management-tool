@@ -23,14 +23,15 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.43.4",
     "@tanstack/vue-table": "^8.20.5",
-    "@vueuse/core": "^11.2.0",
-    "class-variance-authority": "^0.7.0",
+    "@vueuse/core": "^11.3.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "iconify-icon": "^2.1.0",
     "lucide-vue-next": "^0.454.0",
     "pinia": "^2.2.4",
     "radix-vue": "^1.9.8",
-    "tailwind-merge": "^2.5.4",
+    "reka-ui": "^2.3.1",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0"

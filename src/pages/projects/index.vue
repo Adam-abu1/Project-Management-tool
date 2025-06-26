@@ -12,6 +12,7 @@ const getProjects = async () => {
 
   if (error) useErrorStore().setError({ error, customCode: status })
   projectsData.value = data;
+  console.log(projectsData.value)
 };
 
 await getProjects();
