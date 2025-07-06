@@ -42,3 +42,8 @@ export const taskQueryWithProject = (id: string ) => supabase.from( 'tasks' ).se
   .single();
 
 export type Task = QueryData<ReturnType<typeof taskWithProjectsQuery>>;
+
+
+export const profileQuery = ( id: string ) => {
+  return supabase.from( 'profiles' ).select().eq( 'id', id ).single();
+}

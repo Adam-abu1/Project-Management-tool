@@ -1,5 +1,6 @@
 import type { CustomError } from '@/types/Error';
 import type { ExtendedPostgresError } from '@/types/Error';
+import { usePageStore } from '@/stores/page';
 
 export const useErrorStore = defineStore( 'error-store', () => {
   const activeError = ref<null | CustomError | ExtendedPostgresError >( null );
@@ -32,3 +33,7 @@ export const useErrorStore = defineStore( 'error-store', () => {
     clearError
   }
 } );
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useErrorStore, import.meta.hot));
+}

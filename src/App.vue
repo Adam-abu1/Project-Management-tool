@@ -1,9 +1,16 @@
 <script setup lang='ts'>
+
+import { useAuthStore } from '@/stores/auth';
+
 const errorStore = useErrorStore();
 
 onErrorCaptured(( error ) => {
   errorStore.setError( { error } );
   return false;
+});
+
+onMounted(() => {
+  useAuthStore().trackAuthChanges()
 });
 </script>
 
