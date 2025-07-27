@@ -8,7 +8,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
-  authStore.getSession();
+  await authStore.getSession();
   const isAuthPage = ['/login', '/register'].includes(to.path);
   if (!authStore.user && !isAuthPage) {
     return '/login';
