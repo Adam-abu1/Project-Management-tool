@@ -41,6 +41,7 @@ export default defineConfig({
       dirs: ['src/stores/**', 'src/composables/**']
     }),
     vue({
+      defineModel: true,
       template: {
         compilerOptions: {
           isCustomElement: (element) => element.startsWith('iconify-icon')

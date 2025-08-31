@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { projectQuery } from '@/utils/supaQueries';
-import type { Project } from '@/utils/supaQueries';
 
-const route = useRoute( 'projects/[slug]' );
-const project = ref<Project | null >( null );
+const { slug } = useRoute( 'projects/[slug]' ).params;
+const projectsLoader = useProjectsStore();
+const { project } = storeToRefs(projectsLoader);
+const { getProject, updateProject } = projectsLoader;
 
 watch(
   () => project.value?.name,
@@ -11,31 +11,27 @@ watch(
     usePageStore().pageData.title = `Project: ${ project.value?.name || ''}`;
   }
 );
-const getProject = async () => {
-  const { data, error, status } = await projectQuery( route.params.slug );
 
-  if ( error ) useErrorStore().setError({ error, customCode: status })
-  project.value = data;
-};
-
-await getProject();
+await getProject( slug );
 </script>
 
 <template>
   <Table v-if='project'>
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell>{{ project.name }}</TableCell>
+      <TableCell>
+        <AppInPlaceEditText v-model="project.name" @commit="updateProject" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        {{ project.description }}
+        <AppInPlaceEditText v-model="project.description" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell>{{ project.status }}</TableCell>
+      <TableCell><AppInPlaceEditStatus v-model="project.status" @commit="updateProject" :readonly='false'/></TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
